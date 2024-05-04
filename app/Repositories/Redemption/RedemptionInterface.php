@@ -14,4 +14,6 @@ interface RedemptionInterface
     public function delete($id);
 
     public function find($id);
+
+    public function findOne(array $data);
 }

@@ -17,9 +17,9 @@ class CurrencyController extends Controller
       }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $currency = $this->currencyService->all();
+        $currency = $this->currencyService->all($request);
         return JSONResponse::send($currency,'successfully list',200);
 
     }

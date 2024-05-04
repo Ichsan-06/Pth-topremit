@@ -20,9 +20,9 @@ class ReceiptController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $receipt = $this->receiptService->all();
+        $receipt = $this->receiptService->all($request);
         return JSONResponse::send($receipt,'successfully list',200);
     }
 

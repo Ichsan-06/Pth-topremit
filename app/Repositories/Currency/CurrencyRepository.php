@@ -8,9 +8,13 @@ use App\Repositories\Currency\CurrencyInterface;
 
 class CurrencyRepository implements CurrencyInterface
 {
-    public function all()
+    public function all($request)
     {
-        return Currency::all();
+        $perPage = $request->filled('per_page') ? $request->per_page : 20;
+        $query =  Currency::order($request)->filter($request);
+
+
+        return $query->paginate($perPage);
     }
 
     public function create(array $data)

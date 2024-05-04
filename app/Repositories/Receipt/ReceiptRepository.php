@@ -10,11 +10,14 @@ use App\Repositories\Receipt\ReceiptInterface;
 
 class ReceiptRepository implements ReceiptInterface
 {
-    public function all()
+    public function all($request)
     {
-        return Receipt::with(['receiptDetails' => function ($query) {
+        $perPage = $request->filled('per_page') ? $request->per_page : 20;
+        $query =  Receipt::with(['receiptDetails' => function ($query) {
             $query->select('id','receipt_id','email', 'province', 'city', 'address', 'postal_code');
-        }])->get();
+        }])->order($request)->filter($request);
+
+        return $query->paginate($perPage);
     }
 
     public function create(array $data)

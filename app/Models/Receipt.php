@@ -17,6 +17,20 @@ class Receipt extends Model
         'account_number'
     ];
 
+    public function scopeOrder($query,$request){
+        if ($request->has('orderby') && $request->has('sort')) {
+            return $query->orderby($request->orderby,$request->sort);
+        }
+    }
+
+    public function scopeFilter($query,$request){
+        if($request->has('key')){
+            $query->where(function($sub) use($request) {
+                $sub->orWhere("account_name","like",'%'.$request->key.'%');
+            });
+        }
+    }
+
     public function receiptDetails()
     {
         return $this->hasMany(ReceiptDetail::class);

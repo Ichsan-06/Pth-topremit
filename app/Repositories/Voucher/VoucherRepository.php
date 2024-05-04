@@ -36,4 +36,9 @@ class VoucherRepository implements VoucherInterface
     {
         return Voucher::findOrFail($id);
     }
+
+    public function findOne(array $data)
+    {
+        return Voucher::where($data)->firstOrFail();
+    }
 }

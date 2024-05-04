@@ -2,12 +2,14 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\RedemptionController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\Auth\ApiAuthController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,11 @@ Route::middleware(['cors', 'json.response','auth:api'])->group(function () {
     Route::post('redemption', [RedemptionController::class,'store']);
 
     Route::resource('receipt', ReceiptController::class);
-    Route::resource('transaction', TransactionController::class);
+    Route::resource('transaction', TransactionController::class)->only(['index', 'store', 'show']);
+
+    Route::resource('payment', PaymentController::class)->only([ 'store']);
+    Route::post('payment-listener', [PaymentController::class,'listener']);
+
+    Route::resource('notification', NotificationController::class)->only(['index']);
 });
 

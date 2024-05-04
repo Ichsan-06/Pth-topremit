@@ -39,4 +39,9 @@ class RedemptionRepository implements RedemptionInterface
     {
         return Redemption::findOrFail($id);
     }
+
+    public function findOne(array $data)
+    {
+        return Redemption::where($data)->firstOrFail();
+    }
 }

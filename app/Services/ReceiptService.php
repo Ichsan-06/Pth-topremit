@@ -32,10 +32,10 @@ class ReceiptService
         return $this->receiptRepository->delete($id);
     }
 
-    public function all()
+    public function all($request)
     {
 
-        return $this->receiptRepository->all();
+        return $this->receiptRepository->all($request);
     }
 
     public function find($id)

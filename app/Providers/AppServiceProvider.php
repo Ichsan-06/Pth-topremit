@@ -2,14 +2,18 @@
 
 namespace App\Providers;
 
+use App\Services\PaymentService;
 use App\Services\ReceiptService;
 use App\Services\VoucherService;
 use App\Services\CurrencyService;
 use App\Services\RedemptionService;
 use App\Services\TransactionService;
+use App\Services\NotificationService;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\Payment\PaymentInterface;
 use App\Repositories\Receipt\ReceiptInterface;
 use App\Repositories\Voucher\VoucherInterface;
+use App\Repositories\Payment\PaymentRepository;
 use App\Repositories\Receipt\ReceiptRepository;
 use App\Repositories\Voucher\VoucherRepository;
 use App\Repositories\Currency\CurrencyInterface;
@@ -18,6 +22,8 @@ use App\Repositories\Redemption\RedemptionInterface;
 use App\Repositories\Redemption\RedemptionRepository;
 use App\Repositories\Transaction\TransactionInterface;
 use App\Repositories\Transaction\TransactionRepository;
+use App\Repositories\Notification\NotificationInterface;
+use App\Repositories\Notification\NotificationRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,7 +44,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(RedemptionInterface::class, RedemptionRepository::class);
         $this->app->bind(RedemptionService::class, function ($app) {
-            return new RedemptionService($app->make(RedemptionInterface::class));
+            return new RedemptionService(
+                $app->make(RedemptionInterface::class),
+                $app->make(VoucherInterface::class),
+            );
         });
 
         $this->app->bind(ReceiptInterface::class, ReceiptRepository::class);
@@ -52,6 +61,23 @@ class AppServiceProvider extends ServiceProvider
                 $app->make(TransactionInterface::class),
                 $app->make(CurrencyInterface::class),
                 $app->make(ReceiptInterface::class),
+                $app->make(VoucherInterface::class),
+                $app->make(RedemptionInterface::class),
+            );
+        });
+
+        $this->app->bind(PaymentInterface::class, PaymentRepository::class);
+        $this->app->bind(PaymentService::class, function ($app) {
+            return new PaymentService(
+                $app->make(PaymentInterface::class),
+                $app->make(TransactionInterface::class)
+            );
+        });
+
+        $this->app->bind(NotificationInterface::class, NotificationRepository::class);
+        $this->app->bind(NotificationService::class, function ($app) {
+            return new NotificationService(
+                $app->make(NotificationInterface::class),
             );
         });
     }

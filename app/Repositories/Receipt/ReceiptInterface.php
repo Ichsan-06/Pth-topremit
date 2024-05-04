@@ -4,7 +4,7 @@ namespace App\Repositories\Receipt;
 
 interface ReceiptInterface
 {
-    public function all();
+    public function all($request);
 
     public function create(array $data);
 

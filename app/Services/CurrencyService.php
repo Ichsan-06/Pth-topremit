@@ -27,10 +27,10 @@ class CurrencyService
         return $this->currencyRepository->delete($id);
     }
 
-    public function all()
+    public function all($request)
     {
 
-        return $this->currencyRepository->all();
+        return $this->currencyRepository->all($request);
     }
 
     public function find($id)

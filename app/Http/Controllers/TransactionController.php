@@ -6,6 +6,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Helpers\JSONResponse;
 use App\Services\TransactionService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class TransactionController extends Controller
@@ -18,9 +19,10 @@ class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $transaction = $this->transactionService->all($request);
+        return JSONResponse::send($transaction,'successfully list',200);
     }
 
     /**
@@ -37,7 +39,7 @@ class TransactionController extends Controller
             'amount' => 'required|integer',
             'fee' => 'required|integer',
             'notes' => 'nullable|string',
-
+            'voucher_id' => 'nullable|integer|exists:vouchers,id',
         ]);
         if ($validator->fails())
         {
@@ -45,7 +47,9 @@ class TransactionController extends Controller
         }
 
         try {
-            $transaction = $this->transactionService->create($request->toArray());
+            $data = $request->toArray();
+            $data['user_id'] = Auth::user()->id;
+            $transaction = $this->transactionService->create($data);
         } catch (ModelNotFoundException $e) {
             return JSONResponse::send([],'Currency not found',404);
         } catch (\Exception $e) {
@@ -61,13 +65,13 @@ class TransactionController extends Controller
     public function show($id)
     {
         try {
-            $receipt = $this->transactionService->find($id);
+            $transaction = $this->transactionService->find($id);
         } catch (ModelNotFoundException $e) {
             return JSONResponse::send([],'Transaction not found',404);
         } catch (\Exception $e) {
             return JSONResponse::send([],'Internal Server Error',500);
         }
 
-        return JSONResponse::send($receipt,"successfully ".__FUNCTION__,200);
+        return JSONResponse::send($transaction,"successfully ".__FUNCTION__,200);
     }
 }

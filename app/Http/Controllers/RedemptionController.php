@@ -31,17 +31,24 @@ class RedemptionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer|max:255|exists:users,id',
+            // 'user_id' => 'required|integer|max:255|exists:users,id',
             'voucher_id' => 'required|integer|exists:vouchers,id',
-            'date' => 'required|date',
-            'is_used' => 'required|boolean',
+            // 'date' => 'required|date',
+            // 'is_used' => 'required|boolean',
         ]);
         if ($validator->fails())
         {
             return response(['errors'=>$validator->errors()->all()], 422);
         }
 
-        $redemption = $this->redemptionService->create($request->toArray());
+        try {
+            $redemption = $this->redemptionService->create($request->toArray());
+        } catch (ModelNotFoundException $e) {
+            return JSONResponse::send([],'not found',404);
+        } catch (\Exception $e) {
+            return JSONResponse::send([],$e->getMessage(),500);
+        }
+
         return JSONResponse::send($redemption,"successfully ".__FUNCTION__,200);
     }
 

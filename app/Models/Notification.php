@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Currency extends Model
+class Notification extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'country_name',
-        'code',
-        'rate',
+        'user_id', 'title','message',  'is_read',
     ];
+
+    // Relasi dengan pengguna
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function scopeOrder($query,$request){
         if ($request->has('orderby') && $request->has('sort')) {
@@ -24,7 +25,7 @@ class Currency extends Model
     public function scopeFilter($query,$request){
         if($request->has('key')){
             $query->where(function($sub) use($request) {
-                $sub->orWhere("country_name","like",'%'.$request->key.'%');
+                $sub->orWhere("title","like",'%'.$request->key.'%');
             });
         }
     }
