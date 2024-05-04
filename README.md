@@ -5,17 +5,21 @@
     git clone https://github.com/Ichsan-06/Pth-topremit.git
    ```
  2. Install Dependencies
+
     ```sh
-    composer install
-     ```
+        composer install
+    ```
+ 
  3. Migrate Database
+
     ```sh
-    php artisan migrate
-   ```
+        php artisan migrate
+    ```
+ 
  4. Migrate Database
-  ```sh
-    php artisan passport:install
-   ```
+    ```sh
+        php artisan passport:install
+    ```
  5. Upload Postman file in project (`postman.json`)
 
  ## Usage
