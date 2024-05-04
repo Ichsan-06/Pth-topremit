@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Helpers\JSONResponse;
 use App\Services\CurrencyService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CurrencyController extends Controller
 {
@@ -48,7 +49,15 @@ class CurrencyController extends Controller
      */
     public function show(Request $request,$id)
     {
-        $currency = $this->currencyService->find($id);
+
+        try {
+            $currency = $this->currencyService->find($id);
+        } catch (ModelNotFoundException $e) {
+            return JSONResponse::send([],'Currency not found',404);
+        } catch (\Exception $e) {
+            return JSONResponse::send([],'Internal Server Error',500);
+        }
+
         return JSONResponse::send($currency,"successfully ".__FUNCTION__,200);
     }
 
@@ -58,12 +67,6 @@ class CurrencyController extends Controller
      */
     public function update(Request $request,$id)
     {
-
-        try {
-            $currency = $this->currencyService->find($id);
-        } catch (\Throwable $th) {
-            return JSONResponse::send([],"currency not found",200);
-        }
 
         $validator = Validator::make($request->all(), [
             'country_name' => 'required|string|max:255',
@@ -76,7 +79,14 @@ class CurrencyController extends Controller
         }
 
 
-        $currency = $this->currencyService->update($request->toArray(),$id);
+        try {
+            $currency = $this->currencyService->update($request->toArray(),$id);
+        } catch (ModelNotFoundException $e) {
+            return JSONResponse::send([],'Currency not found',404);
+        } catch (\Exception $e) {
+            return JSONResponse::send([],'Internal Server Error',500);
+        }
+
         return JSONResponse::send($currency,"successfully ".__FUNCTION__,200);
     }
 
@@ -85,7 +95,15 @@ class CurrencyController extends Controller
      */
     public function destroy($id)
     {
-        $currency = $this->currencyService->delete($id);
+
+        try {
+            $currency = $this->currencyService->delete($id);
+        } catch (ModelNotFoundException $e) {
+            return JSONResponse::send([],'Currency not found',404);
+        } catch (\Exception $e) {
+            return JSONResponse::send([],'Internal Server Error',500);
+        }
+
         return JSONResponse::send($currency,"successfully ".__FUNCTION__,200);
     }
 }

@@ -2,9 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\RedemptionController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\Auth\ApiAuthController;
 
 /*
@@ -34,5 +36,8 @@ Route::middleware(['cors', 'json.response','auth:api'])->group(function () {
 
     Route::get('myredemption', [RedemptionController::class,'myredemption']);
     Route::post('redemption', [RedemptionController::class,'store']);
+
+    Route::resource('receipt', ReceiptController::class);
+    Route::resource('transaction', TransactionController::class);
 });
 
