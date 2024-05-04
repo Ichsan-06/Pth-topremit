@@ -1,22 +1,31 @@
 
 ## Installation
  1. Clone The Repo
-    ```sh
-    git clone https://github.com/Ichsan-06/Pth-topremit.git
-   ```
- 2. Install Dependencies
-    ```sh
-        composer install
+    ```sh 
+        git clone https://github.com/Ichsan-06/Pth-topremit.git
     ```
- 3. Migrate Database
+
+2. Install Dependencies
     ```sh
-        php artisan migrate
+    composer install
     ```
- 4. Migrate Database
-    ```sh
+
+3. Migrate Database
+    ```sh 
+     php artisan migrate
+    ```
+4. Seeding Database
+    ```sh 
+     php artisan db:seed
+    ```
+
+5. Install Passport (Assuming you're using Laravel Passport for authentication)
+    ```sh 
         php artisan passport:install
     ```
- 5. Upload Postman file in project (`postman.json`)
+
+6. Upload Postman file in project (postman.json)
+
 
 ## Usage
  - Register User 

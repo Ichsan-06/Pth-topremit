@@ -1,18 +1,18 @@
 <?php
 
-namespace Database\Seeders;
-
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Currency;
 use Illuminate\Database\Seeder;
+use App\Models\Currency;
 
-class DatabaseSeeder extends Seeder
+class CurrencySeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
+        // Array of currency data
         $currencies = [
             [
                 'country_name' => 'Singapore',
