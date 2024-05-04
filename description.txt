@@ -1,0 +1,11 @@
+Dari Kasus yang telah diberikan terhadap projek ini saya membuatnya sebagai berikut
+
+1. Untuk melakukan verifikasi profile saya menggunakan email verified dan membuat endpoint Untuk
+    melakukan verified nya tentunya belum menggunakan KTP ataupun yang lainnya
+2. Saya memvalidasi jika akun belum verified maka user tidak bisa melakukan transaksi
+3. Pengguna dapat melakukan semua transaksi ke mata uang manapun selama itu diinput oleh admin di table currency
+4. Rate dalam currency berarti berapa rupiah dalam rate mata uang tersebut
+5. setelah melakukan transaksi dan selesai maka user mendapatkan point 100
+6. Point bisa ditukarkan kedalam bentuk voucher dan bisa di klaim untuk mendapatkan diskon
+7. Setelah transaksi selesai maka user akan mendapatkan notifikasi
+8. catatan transaksi international hanya bisa dilakukan ketika detail penerima diisi

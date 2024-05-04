@@ -33,6 +33,8 @@
  - User can be Verified For doing transaction 
  - After payment listener User will get Notification for update status transaction and Get point for reedem voucher
 
+## Solution
+ - file keterangan dalam pengerjaan projek ini terdapat di `description.txt`
 
 
    
