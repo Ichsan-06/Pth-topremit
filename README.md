@@ -5,11 +5,11 @@
     git clone https://github.com/Ichsan-06/Pth-topremit.git
    ```
  2. Install Dependencies
-  ```sh
+    ```sh
     composer install
-   ```
+     ```
  3. Migrate Database
-  ```sh
+    ```sh
     php artisan migrate
    ```
  4. Migrate Database
@@ -22,6 +22,7 @@
  - Register User 
  - Login user with email and Password
  - User can be Verified For doing transaction 
+ - After payment listener User will get Notification for update status transaction and Get point for reedem voucher
 
 
 
